@@ -12,6 +12,9 @@ pub fn build(b: *std.Build) void {
   // Link C++ standard library
   stormlib.linkLibCpp();
 
+  // Include src/
+  stormlib.addIncludePath(b.path("src"));
+
   const stormlib_compiler_flags = [_][]const u8 {
     "-std=c++11"
   };
