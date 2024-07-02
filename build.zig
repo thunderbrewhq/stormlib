@@ -262,10 +262,8 @@ pub fn build(b: *std.Build) void {
 
   const lzma_sources = [_][]const u8 {
     "src/lzma/C/LzFind.c",
-    "src/lzma/C/LzFindMt.c",
     "src/lzma/C/LzmaDec.c",
-    "src/lzma/C/LzmaEnc.c",
-    "src/lzma/C/Threads.c"
+    "src/lzma/C/LzmaEnc.c"
   };
 
   const lzma_compiler_flags = [_][]const u8 {
@@ -375,6 +373,7 @@ pub fn build(b: *std.Build) void {
     .flags = &zlib_compiler_flags
   });
 
+  stormlib.defineCMacro("_LARGEFILE64_SOURCE", "1");
   stormlib.addCSourceFiles(.{
     .files = &stormlib_sources,
     .flags = &stormlib_compiler_flags
