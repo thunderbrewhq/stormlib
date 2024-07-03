@@ -379,5 +379,8 @@ pub fn build(b: *std.Build) void {
     .flags = &stormlib_compiler_flags
   });
 
+  stormlib.installHeader(b.path("src/StormLib.h"), "StormLib.h");
+  stormlib.installHeader(b.path("src/StormPort.h"), "StormPort.h");
+
   b.installArtifact(stormlib);
 }
