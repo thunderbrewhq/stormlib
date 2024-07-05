@@ -4,6 +4,8 @@ pub fn build(b: *std.Build) void {
   const target = b.standardTargetOptions(.{});
   const optimize = b.standardOptimizeOption(.{});
 
+  const t = &target.result;
+
   const stormlib = b.addStaticLibrary(.{
     .name = "stormlib",
     .target = target,
@@ -378,6 +380,15 @@ pub fn build(b: *std.Build) void {
     .files = &stormlib_sources,
     .flags = &stormlib_compiler_flags
   });
+
+  // link required system libraries
+  switch (t.os.tag) {
+    .windows => {
+      stormlib.linkSystemLibrary("wininet");
+    },
+
+    else => {}
+  }
 
   stormlib.installHeader(b.path("src/StormLib.h"), "StormLib.h");
   stormlib.installHeader(b.path("src/StormPort.h"), "StormPort.h");
